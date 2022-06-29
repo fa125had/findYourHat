@@ -83,29 +83,31 @@ class Field {
       console.log(row.join(" "));
     }
   }
+  //error method when player go out of the grid
+  gridError () {
+    console.log("Do not go out of the grid, you lost. try again..");
+    this.gamveOver = true;
+    newGame = prompt("new game?(y or n): ");
+    console.log(newGame);
+    switch (newGame) {
+      case "y":
+      case "Y":
+      case "yes":
+      case "Yes":
+        this.userX = 0;
+        this.userY = 0;
+        this.gamveOver = false;
+        this.generateField();
+        this.play();
+      break;
+      default:
+        break;
+    }
+  }
 
   checkState() {
     try {
       switch (this.fieldGrid[this.userY][this.userX]) {
-        case '0':
-          console.log("Stay away from holes,you lost :(");
-          this.gamveOver = true;
-          newGame = prompt("new game?(y or n): ");
-          console.log(newGame);
-          switch (newGame) {
-            case "y":
-            case "Y":
-            case "yes":
-            case "Yes":
-              this.userX = 0;
-              this.userY = 0;
-              this.gamveOver = false;
-              // new Field(10, 10, "easy");
-              this.generateField();
-              this.play();
-              break;
-          }
-        break;
         case hat:
           console.log("Nice job, you win");
           this.gamveOver = true;
@@ -147,22 +149,7 @@ class Field {
         case fieldCharacter:
         break;
         default:
-          console.log("Do not go out of the grid, you lost. try again..");
-          this.gamveOver = true;
-          newGame = prompt("new game?(y or n): ");
-          console.log(newGame);
-          switch (newGame) {
-            case "y":
-            case "Y":
-            case "yes":
-            case "Yes":
-              this.userX = 0;
-              this.userY = 0;
-              this.gamveOver = false;
-              this.generateField();
-              this.play();
-            break;
-          }
+          this.gridError();
         break;
       }
     } catch(err) {
@@ -225,6 +212,6 @@ class Field {
 }
 
 //choose grid size and difficulty then run the game
-const fyh = new Field(20, 20, "normal"); //ex: new Field(number, number, "easy|normal|hard")
+const fyh = new Field(25, 25, "normal"); //ex: new Field(number, number, "easy|normal|hard")
 fyh.generateField();
 fyh.play();
